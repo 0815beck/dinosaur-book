@@ -4,16 +4,16 @@
 int main(int argc, char * argv[]) {
 
     if (argc != 3) {
-        perror("Error: You need to provide one input and one output file");
+        perror("Error: You need to provide one input and one output file.\n");
+        exit(1);
     }
 
-    size_t MAX = 1024;
     char * sourceFileName = argv[1];
     char * targetFileName = argv[2];
 
     FILE * sourceFile = fopen(sourceFileName, "r");
     if (sourceFile == NULL) {
-        perror("Souce file could not be opened.\n");
+        perror("Source file could not be opened.\n");
         exit(1);
     }
 
@@ -31,7 +31,7 @@ int main(int argc, char * argv[]) {
             fclose(targetFile);
             fclose(sourceFile);
             if (remove(targetFileName) != 0) {
-                perror("Unable to delete the incomplete target file.\n");
+                perror("Unable to delete the incompletely copied target file.\n");
             }
             exit(1);
         }
@@ -41,5 +41,4 @@ int main(int argc, char * argv[]) {
     fclose(targetFile); 
     fclose(sourceFile);
     exit(1);
-
 }
