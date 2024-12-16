@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-
-void trimAtFirstLF(char * str);
 
 int main(int argc, char * argv[]) {
 
@@ -10,18 +7,9 @@ int main(int argc, char * argv[]) {
         perror("Error: You need to provide one input and one output file");
     }
 
-    char cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        printf("[Info] Current working directory: %s\n", cwd);
-    } else {
-        perror("getcwd() error");
-    }
-
     size_t MAX = 1024;
     char * sourceFileName = argv[1];
     char * targetFileName = argv[2];
-
-    printf("[Debug] Source: %s, Target: %s\n", sourceFileName, targetFileName);
 
     FILE * sourceFile = fopen(sourceFileName, "r");
     if (sourceFile == NULL) {
