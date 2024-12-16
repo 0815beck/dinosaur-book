@@ -1,0 +1,1 @@
+Solution of exercise 2.24 from the dinosaur book. Execute the attached shell script to see which system calls are activated by the program.

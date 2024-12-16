@@ -1,0 +1,1 @@
+strace ./copy test.txt testcp.txt
