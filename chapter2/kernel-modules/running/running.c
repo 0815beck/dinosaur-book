@@ -38,12 +38,26 @@ void running_exit(void) {
 }
 
 ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t *pos) {
-    unsigned long seconds = (jiffies - start_jiffies) / HZ;
+
     printk(KERN_INFO "proc_read was called. HZ = %d, jiffies = %lu", HZ, jiffies);
+    
+    static int completed = 0;
+
+    if (completed) {
+        completed = 0;
+        return 0;
+    }
+
+    completed = 1;
+
+    unsigned long seconds = (jiffies - start_jiffies) / HZ;
     char buffer[BUFFER_SIZE];
-    int length = sprintf(buffer, "%lu", seconds);
-    copy_to_user(user_buf, buffer, length);
-    return length;
+    int rv;
+    
+    rv = sprintf(buffer, "%lu", seconds);
+    copy_to_user(user_buf, buffer, rv);
+    
+    return rv;
 }
 
 module_init(running_init);
