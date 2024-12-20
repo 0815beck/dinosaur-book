@@ -24,7 +24,7 @@ static struct file_operations proc_ops = {
     .read = proc_read,
 };
 
-int running_init(void) {
+int seconds_init(void) {
     proc_create(PROC_NAME, 0666, NULL, &proc_ops);
     printk(KERN_INFO "Module Running was loaded");
     start_jiffies = jiffies;
@@ -32,14 +32,13 @@ int running_init(void) {
     return 0;
 }
 
-void running_exit(void) {
+void seconds_exit(void) {
     printk(KERN_INFO "The module running was removed.");
     remove_proc_entry(PROC_NAME, NULL);
 }
 
 ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t *pos) {
 
-    
     static int completed = 0;
 
     if (completed) {
@@ -62,8 +61,8 @@ ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t
     return rv;
 }
 
-module_init(running_init);
-module_exit(running_exit);
+module_init(seconds_init);
+module_exit(seconds_exit);
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Running Module");
+MODULE_DESCRIPTION("Seconds is running for ..seconds");
 MODULE_AUTHOR("Nico");
