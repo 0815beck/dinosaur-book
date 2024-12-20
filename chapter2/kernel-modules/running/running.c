@@ -13,7 +13,7 @@
 
 
 #define PROC_NAME "seconds"
-#define BUFFER_SIZE 128
+#define BUFFER_SIZE 1024
 
 ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t *pos);
 
@@ -50,13 +50,14 @@ ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t
 
     completed = 1;
 
-    unsigned long seconds = (jiffies - start_jiffies) / HZ;
+    unsigned long seconds; 
     char buffer[BUFFER_SIZE];
     int rv;
     
-    rv = sprintf(buffer, "%lu", seconds);
+    seconds = (jiffies - start_jiffies) / HZ;
+    rv = sprintf(buffer, "The running module is running for %lu seconds.\n", seconds);
     copy_to_user(user_buf, buffer, rv);
-    
+
     return rv;
 }
 
