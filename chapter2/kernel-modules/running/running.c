@@ -39,7 +39,6 @@ void running_exit(void) {
 
 ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t *pos) {
 
-    printk(KERN_INFO "proc_read was called. HZ = %d, jiffies = %lu", HZ, jiffies);
     
     static int completed = 0;
 
@@ -49,6 +48,8 @@ ssize_t proc_read(struct file *file, char __user *user_buf, size_t count, loff_t
     }
 
     completed = 1;
+
+    printk(KERN_INFO "proc_read was called. HZ = %d, jiffies = %lu", HZ, jiffies);
 
     unsigned long seconds; 
     char buffer[BUFFER_SIZE];
